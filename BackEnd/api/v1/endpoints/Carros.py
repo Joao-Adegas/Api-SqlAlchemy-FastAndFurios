@@ -12,7 +12,7 @@ router = APIRouter()
 
 @router.post("/",status_code=status.HTTP_201_CREATED,response_model=CarroSchema)
 async def post_carro(carro:CarroSchema,db:AsyncSession = Depends(get_session)):
-    newCar = CarroModel(carro=carro.carro, cor=carro.cor, motor=carro.motor, QuemDirigiu=carro.QuemDirigiu )
+    newCar = CarroModel(carro=carro.carro, cor=carro.cor, motor=carro.motor, QuemDirigiu=carro.QuemDirigiu,img=carro.img )
     db.add(newCar)
     await db.commit()
     return newCar
@@ -48,6 +48,7 @@ async def put_car(carId:int,car:CarroSchema,db:AsyncSession = Depends(get_sessio
             newCar.cor = car.cor
             newCar.motor = car.motor
             newCar.QuemDirigiu = car.QuemDirigiu
+            newCar.img = car.img
 
             await session.commit()
             return newCar

@@ -6,7 +6,8 @@ class CarroSchema(SCBaseModel):
     carro:str 
     cor:str 
     motor:str 
-    QuemDirigiu:str 
+    QuemDirigiu:str
+    img:str
 
 class Config:
     orm_mode = True

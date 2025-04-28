@@ -1,5 +1,5 @@
 from core.configs import settings
-from sqlalchemy import Column,Integer,String
+from sqlalchemy import Column,Integer,String,Text
 
 class CarroModel(settings.DBBaseModel):
     __tablename__ = 'Carro'
@@ -9,4 +9,5 @@ class CarroModel(settings.DBBaseModel):
     cor:str = Column(String(100))
     motor:str = Column(String(100))
     QuemDirigiu:str = Column(String(100))
+    img:str = Column(Text)
     
