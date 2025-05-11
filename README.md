@@ -1,8 +1,9 @@
-Prerequisites:
+Prerequisites
 
 Have XAMPP installed on your machine.
 
-Steps to initialize the project:
+Steps to initialize the project
+
   XAMPP:
   
   Open XAMPP.
