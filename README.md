@@ -1,3 +1,5 @@
+![Image](https://github.com/user-attachments/assets/0694ef9f-2651-4d1c-b9f4-92c003823e00)
+
 Prerequisites
 
 - Have XAMPP installed on your machine.
