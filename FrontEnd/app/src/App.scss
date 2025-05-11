@@ -5,60 +5,50 @@ body{
   
 
   .container{
+    max-width: 90vw;
+    margin: auto;
+
+    width: 80%;
+    height:10%;
     display: flex;
-    flex-direction: column;
-    
-    h1{
-      font-size: 3rem;
-      text-align: center;
-    }
-  
-    ul{
-      text-align: center;
-
-      li{
-        list-style-type: none;
-
-        .inf{
-          
-          top: 50vh;
-          right: 14vw;
-
-        }
-
-        h2{
-          text-decoration: none;
-        }
-
-        span{
-          font-weight: 700;
-          font-size: 1rem;
-        }
-
-        .img{
-          width:100%;
-          height: 100%;
-         
-
-          img{
-            opacity: 75%;
-            border-radius: 15px;
-            width:70%;
-            height: auto;
-          }
-       
-        }
-
-      }
-
-    }
-  
-    
-
-  
-  
   }
 
-}
+  .inf{
+    display: flex;
+    position: relative;
+    top: 10vh;
 
+  }
+  
+  .infLeft{
+    text-wrap: nowrap;
+    display: flex;
+    flex-direction: column;
+    width: 120px;
+    position: absolute;
+    left: 40vw;
+    top: 20vh;
+  }
+  .slide-item img{
+    width: 50vw;
+    transform: rotate(-15deg);
+
+  }
+  
+  .slide-item img:hover{
+    transform: scale(1.2);
+    transition: 0.2s;
+
+  }
+  .nome{
+
+    font-size: 2.5rem;
+    font-weight: 800;
+  }
+  
+  .motor{
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+}
 
