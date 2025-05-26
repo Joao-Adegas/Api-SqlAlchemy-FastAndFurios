@@ -1,8 +1,10 @@
-import { useState,useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.scss'
+import { useState,useEffect,useRef } from 'react'
 import {Swiper,SwiperSlide} from 'swiper/react'
 import {Navigation} from 'swiper/modules'
+import reactLogo from './assets/react.svg'
+import Modal from '../components/Modal/Modal'
+import axios from 'axios'
+import './App.scss'
 import 'swiper/css'
 import 'swiper/css/navigation'
 
@@ -11,27 +13,77 @@ import 'swiper/css/navigation'
 function App() {
   const [carros, setCarros] = useState([]);
   const [currentIndex, setcurrentIndex] = useState([]);
+  const [modalOpen,setModalOpen] = useState([])
+  const [editing,isEditing] = useState(false)
 
-  const backgroundColors = {
-    "Mazda RX-7 VeilSide": "#8B0000",
-    "Nissan Skyline GT-R R34": "#003366",
-    "Mitsubishi Lancer Evolution VII": "#FFD700",
-    "Toyota Supra": "#FFA500",
-    "Honda S2000": "#FF69B4",
-    "Ford GT40": "#1E90FF",
-    "Lykan Hypersport": "#DC143C"
-  };
+
+  const CarroRef = useRef()
+  const corRef = useRef()
+  const motorRef = useRef()
+  const quemDirigiuRef = useRef()
+  const imgRef = useRef()
+
+
+  const openCreateModal = () => {
+    isEditing(false)
+    setModalOpen(true)
+  }
+
+  const closeModal = () => {
+    isEditing(false)
+    setModalOpen(false)
+  }
+
+  const searchCarros = () =>{
+    axios.get("http://127.0.0.1:3000/api/v1/carros/")
+    .then(response => {
+      setCarros(response.data);
+    })
+    .catch(error => {
+      console.error("Erro ao buscar os carros:", error);
+    });
+  }
+
+  const CreateEdit = () => {
+    const formData = {
+  
+      carro:CarroRef.current.value,
+      cor:corRef.current.value,
+      motor:motorRef.current.value,
+      QuemDirigiu:quemDirigiuRef.current.value,
+      img:imgRef.current.value
+
+    }
+
+    axios.post("http://127.0.0.1:3000/api/v1/carros/",formData,{
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+    .then(() => {
+      searchCarros()
+    })
+    .catch(error => {
+      console.error("Erro ao criar carro:",error)
+    })
+  }
 
   useEffect(() => {
-      
-      fetch('http://127.0.0.1:3000/api/v1/carros/')
-          .then(response => response.json())
-          .then(data => setCarros(data));
+    
+    searchCarros()
+
+
   }, []);
+
+  
 
   return (
     
     <div className='container'>
+      <div className="btn">
+
+      <button onClick={openCreateModal}>Criar</button>
+      </div>
       <Swiper
         modules={[Navigation]}
         slidesPerView={1}
@@ -45,7 +97,7 @@ function App() {
               <h1>{carro.id}</h1>
 
               <div className="slide-item">
-                <img src={carro.img} alt={carro.carro} />
+                <img src={carro.img} alt={carro.img} />
                 <div className="border-animation"></div>
               </div>
 
@@ -67,6 +119,46 @@ function App() {
           </SwiperSlide>
         ))}
       </Swiper>  
+
+        <Modal
+          isOpen={modalOpen}
+          onClose={closeModal}
+          className="custom-modal" 
+          overlayClassName="custom-overlay" 
+          ariaHideApp={false}>
+
+          <form onSubmit={(e) => { e.preventDefault(); CreateEdit(); }}>
+
+            <label>
+              Digite o nome do carro:
+              <input type="text" name="" ref={CarroRef} id="" />
+            </label>
+
+            <label>
+                Digite a cor do carro:
+                <input type="text"  ref={corRef}/>
+            </label>
+
+            <label>
+              Digite o motor do carro:
+              <input type="text" ref={motorRef} name="" id="" />
+            </label>
+
+            <label>
+              Digite quem dirigiu o carro:
+              <input type="text" ref={quemDirigiuRef} />
+            </label>
+
+            <label>
+              Insira a Imagem do carro:
+              <input type="text" ref={imgRef} />
+            </label>
+
+            <button type="submit">Cadastrar</button>
+    
+          </form>
+
+        </Modal>
           
       </div>
   );
