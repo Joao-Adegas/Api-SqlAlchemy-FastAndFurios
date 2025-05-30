@@ -55,6 +55,8 @@ function App() {
 
     }
 
+    
+    
     axios.post("http://127.0.0.1:3000/api/v1/carros/",formData,{
       headers: {
         "Content-Type": "application/json",
@@ -68,11 +70,9 @@ function App() {
     })
   }
 
+
   useEffect(() => {
-    
     searchCarros()
-
-
   }, []);
 
   
@@ -80,9 +80,9 @@ function App() {
   return (
     
     <div className='container'>
-      <div className="btn">
+      <div className="btn-container">
 
-      <button onClick={openCreateModal}>Criar</button>
+        <button onClick={openCreateModal} className='btn'>Criar</button>
       </div>
       <Swiper
         modules={[Navigation]}
@@ -92,31 +92,35 @@ function App() {
         autoplay={true}
       >
         {carros.map((carro) => (
-          <SwiperSlide key={carro.id}>
-            <div className="inf">
-              <h1>{carro.id}</h1>
+          <>
+            <SwiperSlide key={carro.id}>
+              <div className="inf">
+                <h1>{carro.id}</h1>
 
-              <div className="slide-item">
-                <img src={carro.img} alt={carro.img} />
-                <div className="border-animation"></div>
+                <div className="slide-item">
+                  <img src={carro.img} alt={carro.img} />
+                  <div className="border-animation"></div>
+                </div>
+
+                <div className="inf infLeft">
+                  <div className="Personagem">
+                    <span>{carro.QuemDirigiu}</span>
+                  </div>
+
+                  <div className="nome">
+                    <span>{carro.carro}</span>
+                  </div>
+
+                  <div className="motor">
+                    <span>{carro.motor}</span>
+                  </div>
+                
+                <button onClick={openCreateModal} className='btn btn-edit'>EDITAR</button>
+
+                </div>
               </div>
-
-              <div className="inf infLeft">
-                <div className="Personagem">
-                  <span>{carro.QuemDirigiu}</span>
-                </div>
-
-                <div className="nome">
-                  <span>{carro.carro}</span>
-                </div>
-
-                <div className="motor">
-                  <span>{carro.motor}</span>
-                </div>
-
-              </div>
-            </div>
-          </SwiperSlide>
+            </SwiperSlide>
+          </>
         ))}
       </Swiper>  
 
